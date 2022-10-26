@@ -1,5 +1,6 @@
 import { BrowserRouter, Route } from 'react-router-dom';
-import Header from './Header';
+// @ts-ignore
+import Header from './header';
 import StreamCreate from './streams/stream-create';
 import StreamDelete from './streams/stream-delete';
 import StreamEdit from './streams/stream-edit';
