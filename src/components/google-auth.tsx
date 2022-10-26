@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useAction } from '../hooks/use-actions';
+import { useTypedSelector } from '../hooks/use-typed-selector';
 
 const GoogleAuth = () => {
-    const [isSignedIn, setIsSignedIn] = useState(null);
+    const { signIn, signOut } = useAction();
+    const { isSignedIn } = useTypedSelector((state) => state.auth);
     const auth = useRef<any>();
     useEffect(() => {
         window.gapi.load('client:auth2', () => {
@@ -15,14 +18,18 @@ const GoogleAuth = () => {
                 .then(() => {
                     // @ts-ignore
                     auth.current = window.gapi.auth2.getAuthInstance();
-                    setIsSignedIn(auth.current.isSignedIn.get());
+                    onAuthChange(auth.current.isSignedIn.get());
                     auth.current.isSignedIn.listen(onAuthChange);
                 });
         });
     }, []);
 
-    const onAuthChange = () => {
-        setIsSignedIn(auth.current.isSignedIn.get());
+    const onAuthChange = (isSignedIn: boolean) => {
+        if (isSignedIn) {
+            signIn(auth.current.currentUser.get().getId());
+        } else {
+            signOut();
+        }
     };
 
     const onSignInCLick = () => {
