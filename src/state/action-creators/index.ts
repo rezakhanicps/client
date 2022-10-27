@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
 import streams from '../../apis/streams';
+import history from '../../history';
 import { ActionType } from '../action-types';
 import { Action, SignIn, SignOut } from '../actions';
 import { RootState } from '../reducers';
@@ -26,6 +27,7 @@ export const createStream =
             userId,
         });
         dispatch({ type: ActionType.CREATE_STREAM, payload: response.data });
+        history.push('/');
     };
 
 export const fetchStreams = () => async (dispatch: Dispatch<Action>) => {
@@ -35,7 +37,7 @@ export const fetchStreams = () => async (dispatch: Dispatch<Action>) => {
 
 export const fetchStream =
     (id: string) => async (dispatch: Dispatch<Action>) => {
-        const response = await streams.get(`/stream/${id}`);
+        const response = await streams.get(`/streams/${id}`);
         dispatch({ type: ActionType.FETCH_STREAM, payload: response.data });
     };
 
@@ -46,6 +48,6 @@ export const editStream =
     };
 export const deleteStream =
     (id: string) => async (dispatch: Dispatch<Action>) => {
-        await streams.get(`/streams/${id}`);
+        await streams.delete(`/streams/${id}`);
         dispatch({ type: ActionType.DELETE_STREAM, payload: id });
     };
