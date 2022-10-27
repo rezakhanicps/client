@@ -11,7 +11,10 @@ const initialState: AuthState = {
     userId: null,
 };
 
-const reducer = (state: AuthState = initialState, action: Action): AuthState => {
+const reducer = (
+    state: AuthState = initialState,
+    action: Action
+): AuthState => {
     switch (action.type) {
         case ActionType.SIGN_IN:
             return { ...state, isSignedIn: true, userId: action.payload };
