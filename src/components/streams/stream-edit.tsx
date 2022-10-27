@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useEffect } from 'react';
 import { useAction } from '../../hooks/use-actions';
 import { useTypedSelector } from '../../hooks/use-typed-selector';
@@ -16,7 +17,7 @@ const StreamEdit: React.FC<any> = (props) => {
     }, []);
 
     const onSubmit = (formValues: any) => {
-        console.log(formValues);
+        editStream(props.match.params.id, formValues);
     };
 
     return (
@@ -24,7 +25,10 @@ const StreamEdit: React.FC<any> = (props) => {
             {stream ? (
                 <div>
                     <h3>Edit a Stream</h3>
-                    <StreamForm initialValues={stream} onSubmit={onSubmit} />
+                    <StreamForm
+                        initialValues={_.pick(stream, 'title', 'description')}
+                        onSubmit={onSubmit}
+                    />
                 </div>
             ) : (
                 <div>=Loading...</div>
