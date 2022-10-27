@@ -14,6 +14,9 @@ const StreamShow: React.FC<any> = (props) => {
     useEffect(() => {
         fetchStream(id);
         buildPlayer();
+        return () => {
+            player.destroy();
+        };
     }, []);
 
     useEffect(() => {
