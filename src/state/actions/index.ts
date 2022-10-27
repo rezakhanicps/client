@@ -14,4 +14,28 @@ export interface CreateStream {
     payload: string;
 }
 
-export type Action = SignIn | SignOut | CreateStream;
+export interface FetchStreams {
+    type: ActionType.FETCH_STREAMS;
+    payload: string;
+}
+export interface FetchStream {
+    type: ActionType.FETCH_STREAM;
+    payload: string;
+}
+export interface EditStream {
+    type: ActionType.EDIT_STREAM;
+    payload: string;
+}
+export interface DeleteStream {
+    type: ActionType.DELETE_STREAM;
+    payload: string;
+}
+
+export type Action =
+    | SignIn
+    | SignOut
+    | CreateStream
+    | FetchStreams
+    | FetchStream
+    | EditStream
+    | DeleteStream;
