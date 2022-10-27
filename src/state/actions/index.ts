@@ -11,20 +11,20 @@ export interface SignOut {
 
 export interface CreateStream {
     type: ActionType.CREATE_STREAM;
-    payload: string;
+    payload: any;
 }
 
 export interface FetchStreams {
     type: ActionType.FETCH_STREAMS;
-    payload: string;
+    payload: any;
 }
 export interface FetchStream {
     type: ActionType.FETCH_STREAM;
-    payload: string;
+    payload: any;
 }
 export interface EditStream {
     type: ActionType.EDIT_STREAM;
-    payload: string;
+    payload: any;
 }
 export interface DeleteStream {
     type: ActionType.DELETE_STREAM;
