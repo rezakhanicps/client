@@ -10,40 +10,25 @@ const StreamShow: React.FC<any> = (props) => {
     //@ts-ignore
     const stream = useTypedSelector((state) => state.streams[id]);
 
-    let player: any;
     useEffect(() => {
         fetchStream(id);
-        buildPlayer();
-        return () => {
-            player.destroy();
-        };
-    }, []);
-
-    useEffect(() => {
-        buildPlayer();
-    });
-
-    const buildPlayer = () => {
-        if (player || !stream) {
-            return;
-        }
-        player = flv.createPlayer({
+        let player = flv.createPlayer({
             type: 'flv',
             url: `http://localhost:8000/live/${id}.flv`,
         });
         player.attachMediaElement(videoRef.current);
         player.load();
-    };
+        return () => {
+            player.destroy();
+        };
+    }, []);
 
-    if (!stream) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div>
             <video ref={videoRef} style={{ width: '100%' }} controls />
-            <h1>{stream.title}</h1>
-            <h5>{stream.description}</h5>
+            <h1>{stream?.title}</h1>
+            <h5>{stream?.description}</h5>
         </div>
     );
 };
