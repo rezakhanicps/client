@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 import streams from '../../apis/streams';
 import { ActionType } from '../action-types';
 import { Action, SignIn, SignOut } from '../actions';
+import { RootState } from '../reducers';
 
 export const signIn = (userId: string): SignIn => {
     return {
@@ -17,8 +18,13 @@ export const signOut = (): SignOut => {
 };
 
 export const createStream =
-    (formValues: any) => async (dispatch: Dispatch<Action>) => {
-        const response = await streams.post('/streams', formValues);
+    (formValues: any) =>
+    async (dispatch: Dispatch<Action>, getState: () => RootState) => {
+        const { userId } = getState().auth;
+        const response = await streams.post('/streams', {
+            ...formValues,
+            userId,
+        });
         dispatch({ type: ActionType.CREATE_STREAM, payload: response.data });
     };
 

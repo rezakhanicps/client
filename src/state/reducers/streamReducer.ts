@@ -2,15 +2,14 @@ import _ from 'lodash';
 import { ActionType } from '../action-types';
 import { Action } from '../actions';
 
-interface StreamState {
-    id?: string;
-    title?: string;
-    description?: string;
+export interface StreamState {
+    id: string;
+    title: string;
+    descriptio: string;
+    userId: string;
 }
 
-const initialState: StreamState = {};
-
-const reducer = (state: StreamState = initialState, action: Action) => {
+const reducer = (state: StreamState | {} = {}, action: Action) => {
     switch (action.type) {
         case ActionType.FETCH_STREAMS:
             return { ...state, ..._.mapKeys(action.payload, 'id') };
